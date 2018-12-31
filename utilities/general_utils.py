@@ -165,7 +165,7 @@ def read_results(target,options,all_transit_instruments,all_rv_instruments):
             try:
                 parameters[parameter]['object'].set_posterior(posteriors[parameter])  
             except:
-                print 'No posterior for parameter '+parameter
+                print( 'No posterior for parameter '+parameter)
     thefile.close()
     return parameters
 

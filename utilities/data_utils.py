@@ -7,13 +7,13 @@ try:
     import george
     from george import kernels
 except:
-    print 'Warning! The george package is not installed. Some GP functionalities will not work.'
+    print( 'Warning! The george package is not installed. Some GP functionalities will not work.')
 
 try:
     import celerite
     from celerite import terms
 except:
-    print 'Warning! The celerite package is not installed. Some GP functionalities will not work.'
+    print( 'Warning! The celerite package is not installed. Some GP functionalities will not work.')
 import numpy as np
 import batman
 import radvel
@@ -74,8 +74,8 @@ def pre_process(all_t,all_f,all_f_err,options,transit_instruments,parameters):
                 if f_err is not None:
                     f_err = f_err/filt
             elif type(options['photometry'][instrument]['PHOT_DETREND']) is not bool:
-                print '\t WARNING: PHOT_DETREND option '+options['photometry'][instrument]['PHOT_DETREND']+\
-                      ' for '+instrument+' not recognized!'
+                print( '\t WARNING: PHOT_DETREND option '+options['photometry'][instrument]['PHOT_DETREND']+\
+                      ' for '+instrument+' not recognized!')
 
         # Extract transit parameters from prior dictionary:
         if options['MODE'] != 'transit_noise':
@@ -396,7 +396,7 @@ def exonailer_mcmc_fit(times, relative_flux, error, tr_instruments, times_rv, rv
                         par = par+'_'+instrument
                         sufix[instrument][orig_par] = '_'+instrument
                         if par not in parameters.keys():
-                            print 'Error: parameter '+orig_par+' not defined. Exiting...'
+                            print( 'Error: parameter '+orig_par+' not defined. Exiting...')
                             sys.exit()
                     if par not in transit_params:
                         transit_params.append(par)    
@@ -487,7 +487,7 @@ def exonailer_mcmc_fit(times, relative_flux, error, tr_instruments, times_rv, rv
                         par = par+'_'+instrument
                         sufix[instrument][orig_par] = '_'+instrument
                         if par not in parameters.keys():
-                            print 'Error: parameter '+orig_par+' not defined for instrument '+instrument+'. Exiting...'
+                            print( 'Error: parameter '+orig_par+' not defined for instrument '+instrument+'. Exiting...')
                             sys.exit()
                     if par not in rv_params:
                         rv_params.append(par)
@@ -861,7 +861,7 @@ def exonailer_mcmc_fit(times, relative_flux, error, tr_instruments, times_rv, rv
     elif options['MODE'] == 'rvs':
         lnprob = lnprob_rv
     else:
-        print 'Mode not supported. Doing nothing.'
+        print( 'Mode not supported. Doing nothing.')
 
     # If already not done, get posterior samples:
     if len(parameters[all_mcmc_params[0]]['object'].posterior) == 0:
@@ -896,7 +896,7 @@ def exonailer_mcmc_fit(times, relative_flux, error, tr_instruments, times_rv, rv
             pos.append(theta_vector)
 
         # Run the sampler for a bit (300 walkers, 300 jumps, 300 burnin):
-        print '\t Starting first iteration run...'
+        print( '\t Starting first iteration run...')
         sampler = emcee.EnsembleSampler(200, ndim, lnprob)
         sampler.run_mcmc(pos, 200)
 
@@ -931,12 +931,12 @@ def exonailer_mcmc_fit(times, relative_flux, error, tr_instruments, times_rv, rv
             pos.append(theta_vector)
 
         # Run the (final) MCMC:
-        print '\t Done! Starting MCMC...'
+        print( '\t Done! Starting MCMC...')
         sampler = emcee.EnsembleSampler(options['NWALKERS'], ndim, lnprob)
 
         sampler.run_mcmc(pos, options['NJUMPS']+options['NBURNIN'])
 
-        print '\t Done! Saving...'
+        print( '\t Done! Saving...')
         # Save the parameter chains for the parameters that were actually varied:
         for i in range(n_params):
             c_param = all_mcmc_params[i]
@@ -1071,7 +1071,7 @@ def plot_transit_and_rv(times, relative_flux, error, tr_instruments, times_rv, r
                         par = par+'_'+instrument
                         sufix[instrument][orig_par] = '_'+instrument
                         if par not in parameters.keys():
-                            print 'Error: parameter '+orig_par+' not defined. Exiting...'
+                            print( 'Error: parameter '+orig_par+' not defined. Exiting...')
                             sys.exit()
                     if par not in transit_params:
                         transit_params.append(par)        
@@ -1148,7 +1148,7 @@ def plot_transit_and_rv(times, relative_flux, error, tr_instruments, times_rv, r
                         par = par+'_'+instrument
                         sufix[instrument][orig_par] = '_'+instrument
                         if par not in parameters.keys():
-                            print 'Error: parameter '+orig_par+' not defined. Exiting...'
+                            print( 'Error: parameter '+orig_par+' not defined. Exiting...')
                             sys.exit()
                     if par not in rv_params:
                         rv_params.append(par)
@@ -1304,7 +1304,7 @@ def plot_transit_and_rv(times, relative_flux, error, tr_instruments, times_rv, r
             else:
                taus = 1.0/((yerrt*1e6)**2 + (parameters['sigma_w']['object'].value)**2)
                log_like = -0.5*(n_data_trs[0]*log2pi+np.sum(np.log(1./taus)+taus*((residuals*1e6)**2)))
-            print '\t Log-likelihood for transit fit:',log_like
+            print( '\t Log-likelihood for transit fit:',log_like)
       else:
             #sufix[instrument][orig_par]
             log_like = 0.0
@@ -1406,7 +1406,7 @@ def plot_transit_and_rv(times, relative_flux, error, tr_instruments, times_rv, r
                    taus = 1.0/((yerrt[all_tr_instruments_idxs[k]]*1e6)**2 + (parameters['sigma_w'+sufix[instrument]['sigma_w']]['object'].value)**2)
                    log_like = log_like - 0.5*(n_data_trs[k]*log2pi+np.sum(np.log(1./taus)+taus*((residuals*1e6)**2)))
 
-            print '\t Log-likelihood for transit fit(s):',log_like  
+            print( '\t Log-likelihood for transit fit(s):',log_like  )
 
     # Plot RVs:
     if options['MODE'] != 'transit':
@@ -1472,7 +1472,7 @@ def plot_transit_and_rv(times, relative_flux, error, tr_instruments, times_rv, r
             # Get RV log-likelihood:
             taus = 1.0/((rv_err)**2 + (parameters['sigma_w_rv']['object'].value)**2)
             log_like = -0.5*(n_data_rvs[0]*log2pi+np.sum(np.log(1./taus)+taus*(residuals**2)))
-            print '\t Log-likelihood radial-velocity:',log_like
+            print( '\t Log-likelihood radial-velocity:',log_like)
         else:
             log_like = 0.0
             all_residuals = []
@@ -1505,7 +1505,7 @@ def plot_transit_and_rv(times, relative_flux, error, tr_instruments, times_rv, r
                     fout_res.write('{0:.10f} {1:.10f} {2:.10f}\n'.format(phase[ii],residuals[ii],rv_err[all_rv_instruments_idxs[i]][ii]))
                 taus = 1.0/((rv_err[all_rv_instruments_idxs[i]])**2 + (parameters['sigma_w_rv'+sufix[all_rv_instruments[i]]['sigma_w_rv']]['object'].value)**2)
                 log_like = log_like -0.5*(n_data_rvs[i]*log2pi+np.sum(np.log(1./taus)+taus*(residuals**2)))          
-            print '\t Log-likelihood radial velocities:',log_like      
+            print( '\t Log-likelihood radial velocities:',log_like)
             fout_res.close()
             model_phase = get_phases(model_t,parameters['P']['object'].value,parameters['t0']['object'].value)
             idx_rvs_sorted = np.argsort(model_phase)

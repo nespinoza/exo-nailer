@@ -56,7 +56,7 @@ out_dir = 'results/'+fname[:-1]+'/'
 
 # If chains not ran, run the MCMC and save results:
 if not os.path.exists(out_dir):
-    print '\t Starting MCMC...'
+    print( '\t Starting MCMC...')
     data_utils.exonailer_mcmc_fit(t_tr, f, f_err, transit_instruments, t_rv, rv, rv_err, rv_instruments,\
                                      parameters, idx_resampling, options)
 
